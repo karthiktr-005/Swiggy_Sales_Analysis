@@ -1,10 +1,10 @@
-use [Swiggy Database]
+USE [Swiggy Database]
 
-select * from swiggy_data
+SELECT * FROM swiggy_data
 
 --Data Validation & Cleaning
 --Null Check
-select
+SELECT
 	SUM(case when State is null then 1 else 0 end) as null_state,
 	SUM(case when City is null then 1 else 0 end) as null_city,
 	SUM(case when Order_Date is null then 1 else 0 end) as null_order_Date,
@@ -15,7 +15,7 @@ select
 	SUM(case when Price_INR is null then 1 else 0 end) as null_price_INR,
 	SUM(case when Rating is null then 1 else 0 end) as null_Rating,
 	SUM(case when Rating_count is null then 1 else 0 end) as null_Rating_count
-from swiggy_data;
+FROM swiggy_data;
 
 --Blank or Empty String
 SELECT * 
@@ -75,7 +75,7 @@ CREATE TABLE dim_dish(
 dish_id INT IDENTITY(1,1) PRIMARY KEY,
 Dish_Name VARCHAR(200)
 );
- drop table dim_dish;
+ 
 --FACT TABLE
 CREATE TABLE fact_swiggy_orders(
 order_id INT IDENTITY(1,1) PRIMARY KEY,
@@ -94,7 +94,7 @@ FOREIGN KEY (restaturant_id) REFERENCES dim_restaturant(restaturant_id),
 FOREIGN KEY (category_id) REFERENCES dim_category(category_id),
 FOREIGN KEY (dish_id) REFERENCES dim_dish(dish_id)
 ); 
-drop table fact_swiggy_orders
+
 --INSERT DATA IN  TABLES
 INSERT INTO dim_date(Full_Date,Year,Month,Month_Name,Quarter,Day,weeK)
 SELECT DISTINCT
@@ -362,3 +362,4 @@ COUNT(*) AS Rating_Count
 FROM fact_swiggy_Orders
 GROUP BY rating
 ORDER BY rating DESC;
+
